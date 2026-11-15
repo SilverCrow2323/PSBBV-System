@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://silvercrow2323.github.io/PSBBV/schemas/psbbv-node-manifest.schema.json",
+  "title": "PSBBV Node Manifest",
+  "description": "Pinned compatibility copy of the PSBBV Core node manifest contract. Sync when the upstream contract changes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifestVersion", "id", "name", "version", "apiVersion", "description", "category", "platforms", "capabilities", "permissions", "availability", "runtime"],
+  "properties": {
+    "manifestVersion": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9-]*){2,}$", "maxLength": 128},
+    "name": {"type": "string", "minLength": 1, "maxLength": 64},
+    "version": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?$"},
+    "apiVersion": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+    "description": {"type": "string", "minLength": 1, "maxLength": 280},
+    "category": {"enum": ["games", "applications", "network", "media", "downloads", "system"]},
+    "platforms": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["psvita", "windows", "linux", "macos", "android"]}},
+    "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9-]*)+$", "maxLength": 96}},
+    "permissions": {"type": "array", "uniqueItems": true, "items": {"enum": ["media.read", "media.write", "network.client", "storage.private", "storage.shared.read", "input.global"]}},
+    "availability": {"enum": ["planned", "ready", "unavailable", "disabled"]},
+    "runtime": {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"enum": ["builtin", "external-native", "scripted"]}, "entrypoint": {"type": "string", "minLength": 1, "maxLength": 256}}},
+    "compatibility": {"type": "object", "additionalProperties": false, "properties": {"minimumHostVersion": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"}, "maximumHostVersion": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"}}}
+  }
+}
