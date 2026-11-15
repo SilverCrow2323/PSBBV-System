@@ -1,0 +1,26 @@
+{
+  "manifestVersion": 1,
+  "id": "factory.spdw.psbbv.system",
+  "name": "PSBBV System",
+  "version": "0.1.0",
+  "apiVersion": "1.0",
+  "description": "PSBBV preferences, read-only device diagnostics and safe cache management.",
+  "category": "system",
+  "platforms": [
+    "psvita"
+  ],
+  "capabilities": [
+    "system.preferences.read",
+    "system.preferences.write",
+    "system.diagnostics.read",
+    "system.cache.manage"
+  ],
+  "permissions": [
+    "storage.private",
+    "storage.shared.read"
+  ],
+  "availability": "planned",
+  "runtime": {
+    "kind": "builtin"
+  }
+}
