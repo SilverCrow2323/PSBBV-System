@@ -11,6 +11,8 @@ int main(void) {
  p.ui_scale=4; assert(psbbv_preferences_validate(&p)==PSBBV_PREFS_INVALID_VALUE);
  p.ui_scale=2; p.confirm_destructive=2; assert(psbbv_preferences_validate(&p)==PSBBV_PREFS_INVALID_VALUE);
  p.confirm_destructive=1; p.version=99; assert(psbbv_preferences_validate(&p)==PSBBV_PREFS_UNSUPPORTED_VERSION);
+ assert(psbbv_preferences_encode(&p,(uint8_t[PSBBV_PREFERENCES_ENCODED_SIZE]){0},PSBBV_PREFERENCES_ENCODED_SIZE)==PSBBV_PREFS_UNSUPPORTED_VERSION);
+ p.version=PSBBV_PREFERENCES_VERSION;
  assert(psbbv_preferences_validate(NULL)==PSBBV_PREFS_INVALID_ARGUMENT);
  {
   uint8_t bytes[PSBBV_PREFERENCES_ENCODED_SIZE]; psbbv_preferences decoded;
