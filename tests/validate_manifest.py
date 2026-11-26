@@ -46,6 +46,30 @@ def main() -> int:
     malformed_capability["capabilities"] = ["Invalid.Capability"]
     invalid_cases.append(("malformed capability identifier", malformed_capability))
 
+    duplicate_platform = copy.deepcopy(manifest)
+    duplicate_platform["platforms"] = ["psvita", "psvita"]
+    invalid_cases.append(("duplicate platform declaration", duplicate_platform))
+
+    duplicate_capability = copy.deepcopy(manifest)
+    duplicate_capability["capabilities"] = [manifest["capabilities"][0], manifest["capabilities"][0]]
+    invalid_cases.append(("duplicate capability declaration", duplicate_capability))
+
+    unknown_runtime = copy.deepcopy(manifest)
+    unknown_runtime["runtime"]["kind"] = "python"
+    invalid_cases.append(("unsupported runtime kind", unknown_runtime))
+
+    invalid_availability = copy.deepcopy(manifest)
+    invalid_availability["availability"] = "coming-soon"
+    invalid_cases.append(("unknown availability state", invalid_availability))
+
+    extra_field = copy.deepcopy(manifest)
+    extra_field["debug"] = True
+    invalid_cases.append(("undeclared top-level field", extra_field))
+
+    invalid_version = copy.deepcopy(manifest)
+    invalid_version["version"] = "v0.1"
+    invalid_cases.append(("malformed semantic version", invalid_version))
+
     for label, fixture in invalid_cases:
         if not list(validator.iter_errors(fixture)):
             print(f"INVALID TEST: {label} was not rejected by the schema.")
