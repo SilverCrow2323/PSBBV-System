@@ -22,6 +22,12 @@ PSBBV System owns user preferences and safe system-facing tools exposed inside P
 - Redact tokens, account details, serials, MAC addresses and other identifiers from exported logs.
 - Never expose arbitrary shell execution or unrestricted filesystem access to a node.
 
+## Portable preferences codec milestone
+
+Preferences now have a fixed 16-byte, little-endian `PSYS` record with a version byte, validated settings fields, reserved bytes and CRC-32 integrity check. Decode validates the complete record into a temporary value before updating caller state, so corrupt or unsupported records cannot partially overwrite active preferences. This is the serialization layer only; filesystem atomic-replace and backup rotation remain separate work.
+
+Run `cmake -S . -B build && cmake --build build --parallel && ctest --test-dir build --output-on-failure`.
+
 ## Delivery order
 
 1. Define a versioned preference schema and migration policy.
